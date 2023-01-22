@@ -26,12 +26,12 @@ const server = http.createServer((req, res) => {
     
     fs.readFile(filePath, (err, content) => {
         if (err) {
-            if (err === 'ENOENT') {
+            if (err.code === 'ENOENT') {
                 fs.readFile(path.join(DIRNAME, 'public', '404.html'), (err, content) => {
                     if (err) throw err;
                     res.writeHead(200, { 'Content-Type': 'text/html' });
                     res.end(content, 'utf8');
-                })
+                });
             } else {
                 res.writeHead(500);
                 res.end(`Server error: ${err.code}`);
